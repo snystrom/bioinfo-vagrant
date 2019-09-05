@@ -1,9 +1,7 @@
 include wget
 
-$rstudioserver = 'rstudio-server-0.99.465-amd64.deb'
+$rstudioserver = 'server/trusty/amd64/rstudio-server-1.2.1335-amd64.deb'
 $urlrstudio = 'http://download2.rstudio.org/'
-
-# $texpkgs = 'hyperref ifxetex ifluatex fixltx2e listings fancyvrb longtable booktabs ulem framed'
 
 # Update system for r install
 class update_system {   
@@ -16,8 +14,7 @@ class update_system {
         'software-properties-common','libapparmor1',
         'libdbd-mysql', 'libmysqlclient-dev','libssl-dev',
         'python-software-properties',
-        'upstart', 'psmisc',
-        'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
+        'upstart', 'psmisc', 'gcc', 'python', 'g++', 'make','vim', 'whois','mc','libcairo2-dev',
         'default-jdk', 'gdebi-core', 'libcurl4-gnutls-dev',
         'libxml2-dev']:
         ensure  => present,
@@ -68,12 +65,13 @@ class install_r {
     }
 }
 
-class install_tex {
-    package { ['texlive-base', 'texlive-latex-recommended',
-               'texlive-fonts-recommended', 'texlive-latex-extra' ]:
-        ensure => present,
-    }
-}
+# Doubt I'll want tex but keeping this chunk in case I do later.
+#class install_tex {
+#    package { ['texlive-base', 'texlive-latex-recommended',
+#               'texlive-fonts-recommended', 'texlive-latex-extra' ]:
+#        ensure => present,
+#    }
+#}
 
 # install rstudio and start service
 class install_rstudio_server {
@@ -121,7 +119,7 @@ class check_services {
 
 include update_system
 include install_r
-include install_tex
+#include install_tex
 include install_rstudio_server
 include check_services
 

@@ -1,23 +1,23 @@
 options("repos"="http://cran.rstudio.com") # set the cran mirror
 
 packages <- c("devtools",
-              "ggplot2",
-              "tidyr",
-              "dplyr",
+	      "roxygen2",
+	      "testthat",
+	      "tidyverse",
               "stringr",
               "rstudio",
               "knitr",
-              "rmarkdown",
-              "XML",
-              "rJava",
-              "mallet",
-              "igraph",
-              "SnowballC",
-              "NLP",
-              "openNLP")
+              "rmarkdown")
+
 packages <- setdiff(packages, installed.packages()[, "Package"])
+
 if (length(packages) != 0){
   (install.packages(packages))
 }
-devtools::install_github("agoldst/litdata")
+
+# Install Bioconductor
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
+
 update.packages(ask=FALSE)
